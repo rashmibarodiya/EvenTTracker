@@ -10,5 +10,8 @@ const todoSchema = new mongoose.Schema({
     userId : String
 })
 
-export const User= mongoose.model('User', userSchema) // exp changed 
-export const Todo = mongoose.model('Todo', todoSchema)
+ const User= mongoose.model('User', userSchema) // exp changed 
+ const Todo = mongoose.model('Todo', todoSchema)
+ module.exports = {
+    User, Todo
+ }

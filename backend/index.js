@@ -1,16 +1,18 @@
-const express = require("express")
-const mongoose = require("mongoose")
+const express = require("express");
+const mongoose = require("mongoose");
 const app = express();
-const port  = 3000;
-const authRoute = require("./auth")
-const todoRoute = require("./todo")
+const port = 3000;
+const authRoute = require("./auth").router;
+const todoRoute = require("./todo");
 
-app.listen(port,() => {
-    console.log("app is running now")
-})
+app.use(express.json());
 
-app.use("/auth",authRoute);
-app.use("/todo",todoRoute);
+app.use("/auth", authRoute);
+app.use("/todo", todoRoute);
 
+app.listen(port, () => {
+    console.log("App is running now");
+});
 
-//mongoose.connect({uri}, '/todos',{dbName : "todos"})
+// Adjust the mongoose connection string as needed
+// mongoose.connect(uri, { dbName: "todos" });
