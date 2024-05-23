@@ -3,7 +3,7 @@ import { username, password } from "../state/atom.js";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function Signup() {
+function Signin(){
     const [usernameValue, setUsername] = useRecoilState(username);
     const [passwordValue, setPassword] = useRecoilState(password);
     const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/";
@@ -11,9 +11,9 @@ function Signup() {
     return (
         <>
          <div>
-             Welcome! Signed up below
-         </div>
-        <div>
+            welcome back!! Signin below
+            <br/>
+
            Username : 
            <input
                 type="text"
@@ -29,12 +29,12 @@ function Signup() {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <br />
-            Already Signed up?
-            {/* <Link to="/login">Login</Link> */}
+            Not Signed up?
+             {/* <Link to="/login">Login</Link> */}
             <br />
-            <button
+             <button
                 onClick={() => {
-                    axios.post(`${url}auth/signup`, {
+                    axios.post(`${url}auth/login`, {
                         username: usernameValue,
                         password: passwordValue,
                     }, {
@@ -44,18 +44,20 @@ function Signup() {
                     }).then((res) => {
                         console.log(res);
                         localStorage.setItem("token", res.data.token)
-                        alert("Signed up successfully");
+                        alert("signin successfully");
                     }).catch((error) => {
                         console.error("Error:", error);
-                        alert("Signup failed");
+                        alert("signin failed");
                     });
                 }}
-            >
-                Signup
+            > 
+           Signin
             </button>
-        </div>
-        </>
-    );
+            </div>
+
+            </>
+    )
+
 }
 
-export default Signup;
+export default Signin;
