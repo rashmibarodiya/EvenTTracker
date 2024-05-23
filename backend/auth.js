@@ -21,8 +21,10 @@ const authenticateJwt = (req, res, next) => {
 };
 
 router.post('/signup', async (req, res) => {
+    console.log("i am in")
     const { username, password } = req.body;
     const user = await User.findOne({ username });
+    console.log("kaboom")
     if (user) {
         return res.status(403).send("User already exists");
     }
