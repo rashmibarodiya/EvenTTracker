@@ -6,10 +6,13 @@ const router = express.Router();
 
 const authenticateJwt = (req, res, next) => {
     const authHeader = req.headers.authorization;
+    console.log("hi authen")
     if (authHeader) {
+        console.log("auth  "+authHeader)
         const token = authHeader.split(' ')[1];
         jwt.verify(token, secret, (err, user) => {
             if (err) {
+                console.log("token is not valid")
                 return res.status(403).send("Token is not valid");
             }
             req.userId = user.id;

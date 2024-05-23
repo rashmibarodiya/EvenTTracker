@@ -5,6 +5,7 @@ const { Todo } = require("./db");
 const router = express.Router();
 
 router.post('/addTodo', authenticateJwt, (req, res) => {
+    
     const { title, description } = req.body;
     const userId = req.userId;
     const done = false;
