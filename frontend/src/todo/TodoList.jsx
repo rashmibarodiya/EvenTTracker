@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AddTodo from "./AddTodo";
-//import {username}  from "../state/atom.js";
+import {userName}  from "../state/atom.js";
 import { useRecoilValue } from "recoil";
 
 function TodoList() {
     const [todos, setTodos] = useState([]);
-    //const uname = useRecoilValue(username);
+    const usernameObj = useRecoilValue(userName);
+    const uname = usernameObj;
+    console.log("uname :::: "+uname)
      
     const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev";
 
@@ -55,8 +57,8 @@ function TodoList() {
         <>
             {/* <div>
                 Welcome {uname}!
-            </div> */}
-           
+            </div>
+            */}
             <div style={{ marginLeft: 20 }}>
                 <button
                     onClick={() => {
@@ -76,10 +78,16 @@ function TodoList() {
                 {todos.map((todo) => (
                     <div key={todo._id}>
                         <h4>{todo.title}</h4>
-                        <p>{todo.description}</p>
+                        <div style={{
+                            display :"flex",
+                            justifyContent : "space-between"
+                        }}>
+                       {todo.description}
+                       
                         <button onClick={() => markDone(todo._id)}>
                             {todo.done ? "Done" : "Mark as done"}
                         </button>
+                        </div>
                     </div>
                 ))}
             </div> 

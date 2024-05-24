@@ -1,10 +1,14 @@
-import { useRecoilState } from "recoil";
-import { username, password } from "../state/atom.js";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+//import { userName, password } from "../state/atom.js";
+import { userName, password } from "../state/atom.js"; // Corrected import
+
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 function Signin(){
-    const [usernameValue, setUsername] = useRecoilState(username);
+   
+    const [username, setUsername] = useState("");
+    const x = useSetRecoilState(userName)
     const [passwordValue, setPassword] = useRecoilState(password);
     const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/";
 
@@ -18,7 +22,12 @@ function Signin(){
            <input
                 type="text"
                 placeholder="username"
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => {
+                    
+                    setUsername(e.target.value)
+                    x(username)
+                }
+            }
             />
             <br />
             <br />
@@ -35,7 +44,7 @@ function Signin(){
              <button
                 onClick={() => {
                     axios.post(`${url}auth/login`, {
-                        username: usernameValue,
+                        username: username,
                         password: passwordValue,
                     }, {
                         headers: {

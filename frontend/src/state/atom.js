@@ -1,11 +1,12 @@
-import {atom} from 'recoil'
 
- export const username = atom ({
-    key : "username",
-     default : {token : null ,username :null}
-})
- export const password = atom ({
-    key : "password",
-     default : {token : null ,passwprd :null}
-})
+import { atom } from "recoil";
 
+export const userName = atom({
+   key: "userName"
+   // default: null, // Set default to null initially
+});
+
+export const password = atom({
+   key: "password",
+   default: null, // Set default to null initially
+});
