@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import Signup from './auth/Signup'
 import Signin from './auth/Signin'
 import AddTodo from './todo/AddTodo'
+import TodoList from './todo/TodoList'
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import {RecoilRoot} from 'recoil'
 import './App.css'
@@ -21,6 +22,7 @@ function App() {
                 <Route path = '/login' element= {<Signin/>}></Route>
                 <Route path = '/' element= {<Signup/>}></Route>
                 <Route path = '/addTodo' element= {<AddTodo/>}></Route>
+                <Route path = '/todo' element= {<TodoList/>}></Route>
                
               </Routes>
             </Router>
