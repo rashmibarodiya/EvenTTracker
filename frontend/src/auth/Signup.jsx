@@ -1,64 +1,40 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { userName, password } from "../state/atom.js";
-import { Link } from "react-router-dom";
-import axios from "axios";
 
-function Signup() {
-   // const [username, setUsername] = useRecoilState(userName);
+import React, { useState } from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import {useSetRecoilState} from "recoil";
+import {authState} from "../state/mg.js";
 
-    const username = useRecoilValue(userName)
-    const setUsername = useSetRecoilState(userName)
-    const [password, setPassword] = useRecoilState(password);
-    const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/";
+const Signup = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSignup = async () => {
+        const response = await fetch('https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/auth/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        // Todo: Create a type for the response that you get back from the server
+        const data = await response.json();
+        if (data.token) {
+            localStorage.setItem("token", data.token)
+            window.location = "/todos";
+        } else {
+            alert("Error while signing up");
+        }
+    };
 
     return (
-        <>
-         <div>
-             Welcome! Signed up below
-         </div>
-        <div>
-           Username : 
-           <input
-                type="text"
-                placeholder="username"
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <br />
-            <br />
-           Password :
-            <input
-                type="password" // Changed to password type for better UX
-                placeholder="password"
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <br />
-            Already Signed up?
-            {/* <Link to="/login">Login</Link> */}
-            <br />
-            <button
-                onClick={() => {
-                    axios.post(`${url}auth/signup`, {
-                        username: username,
-                        password: password,
-                    }, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }
-                    }).then((res) => {
-                        console.log(res);
-                        localStorage.setItem("token", res.data.token)
-                        alert("Signed up successfully");
-                    }).catch((error) => {
-                        console.error("Error:", error);
-                        alert("Signup failed");
-                    });
-                }}
-            >
-                Signup
-            </button>
+        <div style={{justifyContent: "center", display: "flex", width: "100%"}}>
+            <div>
+                <h2>Signup</h2>
+                <input type='text' value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Username' />
+                <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' />
+                Already signed up? <Link to="/login">Login</Link>
+                <button onClick={handleSignup}>Signup</button>
+            </div>
         </div>
-        </>
     );
-}
+};
 
 export default Signup;
