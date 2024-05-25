@@ -1,11 +1,15 @@
 import axios from "axios";
 import { useState } from "react"
 
-
+import { userName } from "../state/mg.js";
+import { useRecoilValue } from "recoil";
 
 function AddTodo() {
     const [title, setTitle] = useState("");
     const [des, setDes] = useState("")
+    const uname = useRecoilValue(userName); // Get the username from Recoil state
+    console.log(uname)
+    
     // console.log(localStorage.getItem("token"))
     const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/";
     return (
