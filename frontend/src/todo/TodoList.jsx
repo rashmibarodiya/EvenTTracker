@@ -7,7 +7,7 @@ import { useRecoilValue } from "recoil";
 function TodoList() {
     const [todos, setTodos] = useState([]);
     const uname = useRecoilValue(userName); // Get the username from Recoil state
-
+    const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/";
     useEffect(() => {
         if (!uname) return;
 
@@ -28,6 +28,21 @@ function TodoList() {
         getTodos();
     }, [uname]);
 
+    const addTodo = async ()=> {
+            // try{
+                const res =  axios.post(`${url}/todo/addTodo`,{},{
+                    headers:{
+                        Authorization : "Bearer "+ localStorage.getItem("token")
+                    }
+                });
+                const data = await res.data
+                setTodos([...todos, data]);
+        alert("todo aDDED")
+            // }catch (e)  {
+
+            // }
+        }
+
     const markDone = async (id) => {
         try {
             const res = await axios.patch(`${url}/todo/todos/${id}/done`, {}, {
@@ -45,9 +60,9 @@ function TodoList() {
         }
     };
 
-    if (!uname) {
-        return <div>Loading...</div>;
-    }
+    // if (!uname) {
+    //     return <div>Loading...</div>;
+    // }
 
     return (
         <>
@@ -62,17 +77,17 @@ function TodoList() {
             </div>
             <div><AddTodo /></div>
             <div>
-                {todos.map((todo) => (
-                    <div key={todo._id}>
-                        <h4>{todo.title}</h4>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            {todo.description}
-                            <button onClick={() => markDone(todo._id)}>
-                                {todo.done ? "Done" : "Mark as done"}
-                            </button>
-                        </div>
-                    </div>
-                ))}
+                {/* {todos.map((todo) => (
+                    // <div key={todo._id}>
+                    //     <h4>{todo.title}</h4>
+                    //     <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    //         {todo.description}
+                    //         <button onClick={() => markDone(todo._id)}>
+                    //             {todo.done ? "Done" : "Mark as done"}
+                    //         </button>
+                    //     </div>
+                    // </div>
+                ))} */}
             </div>
         </>
     );

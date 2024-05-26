@@ -7,10 +7,11 @@ const TodoList = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const authStateValue = useRecoilValue(authState);
+    const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/";
 
     useEffect(() => {
         const getTodos = async () => {
-            const response = await fetch('http://localhost:3000/todo/todos', {
+            const response = await fetch(`${url}todo/todo`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
             });
             // Todo: Create a type for the response that you get back from the server
@@ -21,17 +22,18 @@ const TodoList = () => {
     }, [authState.token]);
 
     const addTodo = async () => {
-        const response = await fetch('http://localhost:3000/todo/todos', {
+        const response = await fetch(`${url}todo/addTodo`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem("token")}` },
             body: JSON.stringify({ title, description })
         });
         const data = await response.json();
         setTodos([...todos, data]);
+        alert("todo aDDED")
     };
 
     const markDone = async (id) => {
-        const response = await fetch(`http://localhost:3000/todo/todos/${id}/done`, {
+        const response = await fetch(`${url}todo/todos/${id}/done`, {
             method: 'PATCH',
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         });
