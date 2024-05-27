@@ -9,6 +9,10 @@ export const password = atom({
     key: "password",
     default: null // Set default to null initially
 });
+export const todo = atom({
+    key: "todo",
+    default: [] // Set default to null initially
+});
 export const authState = atom({
     key: 'authState',
     default: { token: null, username: null },
