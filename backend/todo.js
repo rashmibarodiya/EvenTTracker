@@ -13,6 +13,7 @@ router.post('/addTodo', authenticateJwt, (req, res) => {
 
     todo.save()
         .then(saved => {
+            console.log(saved)
             res.status(200).json(saved);
         })
         .catch(err => {
