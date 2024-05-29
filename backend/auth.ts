@@ -1,22 +1,28 @@
-const jwt = require("jsonwebtoken");
-const express = require("express");
+import jwt from "jsonwebtoken";
+import express from "express";
 const secret = "arabi";
-const { User } = require('./db');
-const router = express.Router();
+import { User } from './db';
+export const router = express.Router();
+import { Request, Response, NextFunction } from "express";
 
-const authenticateJwt = (req, res, next) => {
+export const authenticateJwt = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
-    console.log("hi authen")
+    //console.log("hi authen")
     if (authHeader) {
-        console.log("auth  "+authHeader)
+        //    console.log("auth  "+authHeader)
         const token = authHeader.split(' ')[1];
         jwt.verify(token, secret, (err, user) => {
             if (err) {
                 console.log("token is not valid")
                 return res.status(403).send("Token is not valid");
             }
-            req.userId = user.id;
-            next();
+            if (user && typeof user !== "string") {
+                req.headers["userId"] = user.id
+                //  req.userId = user.id; // the id is given in jwt.sign in login and signup and it is equal to  _id 
+                next();
+            } else {
+                res.sendStatus(403)
+            }
         });
     } else {
         res.status(401).send("Token not provided");
@@ -54,7 +60,9 @@ router.post('/login', async (req, res) => {
 });
 
 router.get("/me", authenticateJwt, async (req, res) => {
-    const user = await User.findOne({ _id: req.userId });
+
+    const userId = req.headers["userId"]
+    const user = await User.findOne({ _id: userId });
     if (user) {
         res.json({
             username: user.username
@@ -64,7 +72,3 @@ router.get("/me", authenticateJwt, async (req, res) => {
     }
 });
 
-module.exports = {
-    authenticateJwt,
-    router
-};
