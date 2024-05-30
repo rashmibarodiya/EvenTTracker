@@ -60,7 +60,9 @@ exports.router.post('/signup', (req, res) => __awaiter(void 0, void 0, void 0, f
     });
 }));
 exports.router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("in login");
     const { username, password } = req.body;
+    console.log(username);
     const user = yield db_1.User.findOne({ username, password });
     if (user) {
         const token = jsonwebtoken_1.default.sign({ id: user._id }, secret, { expiresIn: '1h' });
