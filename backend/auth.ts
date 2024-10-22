@@ -1,9 +1,11 @@
-import jwt from "jsonwebtoken";
-import express from "express";
+import * as jwt from "jsonwebtoken";
+import * as express from "express";
 const secret = "arabi";
-import { User } from './db';
+import { User,connectDB } from './db';
 export const router = express.Router();
 import { Request, Response, NextFunction } from "express";
+
+
 
 export const authenticateJwt = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;

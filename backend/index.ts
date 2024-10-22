@@ -1,15 +1,24 @@
 
 
 
-import express from "express";
-import mongoose from "mongoose";
+import  express from "express";
+import * as mongoose from "mongoose";
+import dotenv from 'dotenv';
+dotenv.config();
+
 const app = express();
-const port : number = 3000;
+import { connectDB } from "./db";
+const port = process.env.PORT
+console.log("this is url ", process.env.URL)
 
 import { router as authRoute, router } from "./auth";
 import todoRoute from "./todo";
 const uri: string | undefined = process.env.MONG;
-import  cors from "cors"; // Add this line
+
+
+
+import  cors from "cors";
+connectDB()
 app.use(cors())
 app.use(express.json());
 console.log(process.env.MONG);
