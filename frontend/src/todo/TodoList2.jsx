@@ -7,11 +7,11 @@ const TodoList = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const authStateValue = useRecoilValue(authState);
-    const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/";
+    const url = process.env.URL
 
     useEffect(() => {
         const getTodos = async () => {
-            const response = await fetch(`${url}todo/todo`, {
+            const response = await fetch(`${url}/todo/todo`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
             });
             // Todo: Create a type for the response that you get back from the server

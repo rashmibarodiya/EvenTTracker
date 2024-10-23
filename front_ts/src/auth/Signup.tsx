@@ -1,15 +1,16 @@
 
-import React, { useState } from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import  { useState } from 'react';
+import {Link} from 'react-router-dom';
 // import {useSetRecoilState} from "recoil";
 // import {authState} from "../state/mg";
+const url = process.env.URL!
 
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+   
     const handleSignup = async () => {
-        const response = await fetch('https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/auth/signup', {
+        const response = await fetch(`${url}/auth/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
@@ -27,6 +28,8 @@ const Signup = () => {
     return (
         <div style={{justifyContent: "center", display: "flex", width: "100%"}}>
             <div>
+
+                hi signup
             <h2>Welcome !!</h2>
                 <h4>Signup below</h4>
                 

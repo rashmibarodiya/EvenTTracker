@@ -12,7 +12,7 @@ function Signin() {
     const [username, setUsername] = useRecoilState(userName);
     const [passwordValue, setPassword] = useRecoilState(password);
     const navigate = useNavigate();
-    const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/";
+    const url = process.env.URL
 
     const handleSignin = async () => {
         const response = await axios.post(`${url}auth/login`,{

@@ -1,15 +1,15 @@
 // AddTodo.jsx
 import axios from "axios";
 import { useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { userName, todo } from "../state/mg.js";
+import {  useSetRecoilState } from "recoil";
+import {  todo } from "../state/mg.js";
 
 function AddTodo() {
     const [title, setTitle] = useState("");
     const [des, setDes] = useState("");
     const setTodos = useSetRecoilState(todo); // CHANGED: Renamed variable for clarity
-    const uname = useRecoilValue(userName);
-    const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/";
+    // const uname = useRecoilValue(userName);
+    const url = process.env.URL!;
 
     return (
         <>

@@ -1,23 +1,24 @@
 // mg.ts
 import { atom } from "recoil";
 import { Todo } from "../todo/TodoList"
+import { Auth } from "../types/Todo";
 
-export const userName = atom<string>({ // CHANGED: Specified type <string>
+export const userName = atom<string>({ 
     key: "userName",
     default: ""
 });
 
-export const password = atom<string | null>({ // CHANGED: Specified type <string | null>
+export const password = atom<string | null>({ 
     key: "password",
     default: null
 });
 
-export const todo = atom<Todo[]>({ // CHANGED: Specified type <Todo[]>
+export const todo = atom<Todo[]>({ 
     key: "todo",
     default: []
 });
 
-export const authState = atom<{ token: string | null, username: string | null }>({ // CHANGED: Specified type <{ token: string | null, username: string | null }>
+export const authState = atom<Auth>({ 
     key: 'authState',
-    default: { token: null, username: null },
+    default: { token: "", username: "" },
 });

@@ -9,8 +9,7 @@ function AddTodo() {
     const [des, setDes] = useState("");
     const setTodos = useSetRecoilState(todo); // CHANGED: Renamed variable for clarity
     const uname = useRecoilValue(userName);
-    const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/";
-
+    const url = process.env.URL
     return (
         <>
             <div>Add todo</div>

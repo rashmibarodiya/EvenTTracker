@@ -3,17 +3,17 @@ import { useRecoilState } from "recoil";
 import { userName } from "../state/mg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+ 
 function Signin() {
     const [username, setUsername] = useRecoilState(userName);
     const [password, setPassword] = useState(""); // Use local state for password
     const navigate = useNavigate();
-    const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/";
+    const url = process.env.URL;
 
     const handleSignin = async () => {
         console.log("handle signin");
         try {
-            const response = await axios.post(`${url}auth/login`, {
+            const response = await axios.post(`${url}/auth/login`, {
                 username: username,
                 password: password,
             }, {

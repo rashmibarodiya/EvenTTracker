@@ -1,6 +1,4 @@
-import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
+
 import Signup from './auth/Signup'
 import Signin from './auth/Signin'
 import AddTodo from './todo/AddTodo'
@@ -14,9 +12,9 @@ function App() {
  
   return (
     <>
-           
+           hello world
         <RecoilRoot>
-        {/* <Signup></Signup> */}
+        <Signup></Signup>
             <Router>
               <Routes>
                 <Route path = '/signup' element= {<Signup/>}></Route>

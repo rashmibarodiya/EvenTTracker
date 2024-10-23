@@ -8,7 +8,7 @@ import { userName, todo } from "../state/mg.js";
 function TodoList() {
     const [todos, setTodos] = useRecoilState(todo); // CHANGED: Use Recoil state
     const uname = useRecoilValue(userName);
-    const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/";
+    const url = process.env.URL
 
     useEffect(() => {
         const getTodos = async () => {

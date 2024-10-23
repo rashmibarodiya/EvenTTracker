@@ -1,13 +1,14 @@
-import React, { useContext, useState, useEffect } from 'react';
+import  {  useState, useEffect } from 'react';
 import { authState } from '../state/mg.js';
 import {useRecoilValue} from "recoil";
+import Todo from '../types/Todo';
 
 const TodoList = () => {
-    const [todos, setTodos] = useState([]);
+    const [todos, setTodos] = useState<Todo[]>([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const authStateValue = useRecoilValue(authState);
-    const url = "https://miniature-space-umbrella-69vpxrw5rqrqc4qvq-3000.app.github.dev/";
+    const url = process.env.URL!
 
     useEffect(() => {
         const getTodos = async () => {
@@ -19,7 +20,7 @@ const TodoList = () => {
             setTodos(data);
         };
         getTodos();
-    }, [authState.token]);
+    }, [authState]);
 
     const addTodo = async () => {
         const response = await fetch(`${url}todo/addTodo`, {
@@ -32,13 +33,13 @@ const TodoList = () => {
         alert("todo aDDED")
     };
 
-    const markDone = async (id) => {
+    const markDone = async (id:string) => {
         const response = await fetch(`${url}todo/todos/${id}/done`, {
             method: 'PATCH',
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         });
         const updatedTodo = await response.json();
-        setTodos(todos.map((todo) => (todo._id === updatedTodo._id ? updatedTodo : todo)));
+        setTodos(todos.map((todo :Todo) => (todo._id === updatedTodo._id ? updatedTodo : todo)));
     };
 
     return (
@@ -48,7 +49,7 @@ const TodoList = () => {
                 <div style={{marginTop: 25, marginLeft: 20}}>
                     <button onClick={() => {
                         localStorage.removeItem("token");
-                        window.location = "/login";
+                        window.location.href = "/login";
                     }}>Logout</button>
                 </div>
             </div>
@@ -56,7 +57,7 @@ const TodoList = () => {
             <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Title' />
             <input type='text' value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Description' />
             <button onClick={addTodo}>Add Todo</button>
-            {todos.map((todo) => (
+            {todos.map((todo  :Todo) => (
                 <div key={todo._id}>
                     <h3>{todo.title}</h3>
                     <p>{todo.description}</p>
