@@ -2,7 +2,7 @@
 import Signup from './auth/Signup'
 import Signin from './auth/Signin'
 import AddTodo from './todo/AddTodo'
-import TodoList2 from './todo/TodoList2'
+// import TodoList2 from './todo/TodoList2'
 import TodoList from './todo/TodoList'
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import {RecoilRoot} from 'recoil'
