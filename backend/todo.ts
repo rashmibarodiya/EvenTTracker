@@ -38,6 +38,8 @@ router.get('/todo', authenticateJwt, (req, res) => {
 });
 
 router.patch('/todos/:todoId/done', authenticateJwt, (req, res) => {
+
+    console.log("here for updating the todo")
     const { todoId } = req.params;
     const userId = req.headers["userId"];
     Todo.findOneAndUpdate({ _id: todoId, userId }, { done: true }, { new: true })

@@ -1,57 +1,69 @@
-import { useState } from "react";
-import { useRecoilState } from "recoil";
-import { userName } from "../state/mg";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
- 
-function Signin() {
-    const [username, setUsername] = useRecoilState(userName);
-    const [password, setPassword] = useState(""); // Use local state for password
-    const navigate = useNavigate();
-    const url = import.meta.env.VITE_URL;
-    const handleSignin = async () => {
-        console.log("handle signin");
-        try {
-            const response = await axios.post(`${url}/auth/login`, {
-                username: username,
-                password: password,
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-            const data = response.data;
-            if (data.token) {
-                console.log("i got in");
-                localStorage.setItem("token", data.token);
-                navigate("/todo"); // Use navigate to change the route
-            } else {
-                alert("Error while signing up");
-            }
-        } catch (error) {
-            console.error("Signin error:", error);
-            if (axios.isAxiosError(error)) {
-                console.error("Axios error details:", error.response?.data);
-            }
-            alert("An error occurred during sign-in. Please try again.");
+const url = import.meta.env.VITE_URL;
+
+const Signin = () => {
+    console.log("Signup component rendered***********************************", url);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSignin = async () => {
+        const response = await fetch(`${url}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await response.json();
+        if (data.token) {
+            localStorage.setItem("token", data.token);
+            window.location.href = "/todos";
+        } else {
+            alert("Error while signing up");
         }
     };
 
     return (
-        <div style={{ justifyContent: "center", display: "flex", width: "100%" }}>
-            <div>
-                <h2>Welcome back !!</h2>
-                <h4>Signin below</h4>
-                Username: <input type='text' onChange={(e) => setUsername(e.target.value)} placeholder='Username' />
-                <br />
-                Password: <input type='password' onChange={(e) => setPassword(e.target.value)} placeholder='Password' />
-                <br /><br />
-                Don't have an account? <Link to="/signup">Signup</Link>
-                <button onClick={handleSignin}>Login</button>
+        <div className="flex justify-center items-center  bg-gray-100">
+            <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Welcome back!</h2>
+                <h4 className="text-gray-600 mb-6">Signin below</h4>
+                
+                <div className="mb-4">
+                   
+                    <input 
+                        type='text' 
+                        id="username"
+                        onChange={(e) => setUsername(e.target.value)} 
+                        placeholder='Username' 
+                        className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                </div>
+                
+                <div className="mb-4">
+                    
+                    <input 
+                        type='password' 
+                        id="password"
+                        onChange={(e) => setPassword(e.target.value)} 
+                        placeholder='Password' 
+                        className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                </div>
+                
+                <div className="mb-4">
+                    <span className="text-gray-600">Don't have an account? <Link to="/signup" className="text-blue-500 hover:underline">Login</Link></span>
+                </div>
+                
+                <button 
+                    onClick={handleSignin} 
+                    className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition duration-200"
+                >
+                    Signin
+                </button>
             </div>
         </div>
     );
-}
+};
 
 export default Signin;
