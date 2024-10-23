@@ -17,15 +17,16 @@ function App() {
 
            
         <RecoilRoot>
-        {/* <Signup></Signup> */}
+       
             <Router>
+            <AppBar/>
               <Routes>
                 <Route path = '/signup' element= {<Signup/>}></Route>
                 <Route path = '/login' element= {<Signin/>}></Route>
-                <Route path = '/' element= {<AppBar/>}></Route>
+                {/* <Route path = '/' element= {<AppBar/>}></Route> */}
                 <Route path = '/addTodo' element= {<AddTodo/>}></Route>
                 <Route path = '/todo' element= {<TodoList/>}></Route>
-                <Route path = '/todos' element= {<TodoList2/>}></Route>
+                {/* <Route path = '/todos' element= {<TodoList2/>}></Route> */}
                
               </Routes>
             </Router>

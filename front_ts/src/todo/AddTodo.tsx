@@ -47,7 +47,7 @@ function AddTodo() {
     };
 
     return (
-        <div className="flex flex-col items-center p-10 w-96 bg-white rounded-lg shadow-lg">
+        <div className="ml-96 p-10 w-96 bg-gray-100 rounded-lg shadow-2xl mt-32">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Add Todo</h2>
             <div className="mb-4 w-full">
                 <input

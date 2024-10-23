@@ -17,15 +17,15 @@ const Signin = () => {
         const data = await response.json();
         if (data.token) {
             localStorage.setItem("token", data.token);
-            window.location.href = "/todos";
+            window.location.href = "/todo";
         } else {
             alert("Error while signing up");
         }
     };
 
     return (
-        <div className="flex justify-center items-center  bg-gray-100">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+        <div className="flex justify-center items-center mt-32 ">
+            <div className="bg-gray-100 p-8 rounded-lg shadow-2xl w-96">
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Welcome back!</h2>
                 <h4 className="text-gray-600 mb-6">Signin below</h4>
                 
