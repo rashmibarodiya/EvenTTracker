@@ -22,7 +22,7 @@ export const connectDB = async () => {
             throw new Error("MONGODB URI is not available")
         }
       await mongoose.connect(MONGO_URI,
-        { dbName: 'courses' }
+        { dbName: 'todos' }
       );
       
       console.log('MongoDB connected successfully');

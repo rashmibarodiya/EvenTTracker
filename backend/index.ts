@@ -35,4 +35,4 @@ app.listen(port, () => {
 // const authRoute = require("./auth").router;
 // const todoRoute = require("./todo");
 // Adjust the mongoose connection string as needed
- mongoose.connect(`${uri}`, { dbName: "todos" });
+//  mongoose.connect(`${uri}`, { dbName: "todos" });

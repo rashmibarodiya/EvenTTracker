@@ -5,7 +5,7 @@ import { Todo } from "./db";
 const router = express.Router();
 
 router.post('/addTodo', authenticateJwt, (req, res) => {
-    
+    console.log("i am here to add todo")
     const { title, description } = req.body;
     const userId = req.headers["userId"];
     const done = false;
@@ -13,7 +13,7 @@ router.post('/addTodo', authenticateJwt, (req, res) => {
 
     todo.save()
         .then(saved => {
-            console.log(saved)
+            console.log("todo saved successfully",saved)
             res.status(200).json(saved);
         })
         .catch(err => {

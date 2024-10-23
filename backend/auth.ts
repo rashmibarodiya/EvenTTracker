@@ -37,11 +37,14 @@ router.post('/signup', async (req, res) => {
     const user = await User.findOne({ username });
     console.log("kaboom")
     if (user) {
+        console.log("user already exits",user)
+        
         return res.status(403).send("User already exists");
     }
     const newUser = new User({ username, password });
     await newUser.save();
     const token = jwt.sign({ id: newUser._id }, secret, { expiresIn: '1h' });
+    console.log("user signed up successfully")
     res.json({
         message: "User created successfully", token
     });
@@ -64,14 +67,16 @@ router.post('/login', async (req, res) => {
 });
 
 router.get("/me", authenticateJwt, async (req, res) => {
-
+console.log("me route called")
     const userId = req.headers["userId"]
     const user = await User.findOne({ _id: userId });
     if (user) {
+        console.log("user found",user)
         res.json({
             username: user.username
         });
     } else {
+        console.log("user not found")
         res.status(403).send("User not found");
     }
 });
