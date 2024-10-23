@@ -8,8 +8,7 @@ function Signin() {
     const [username, setUsername] = useRecoilState(userName);
     const [password, setPassword] = useState(""); // Use local state for password
     const navigate = useNavigate();
-    const url = process.env.URL;
-
+    const url = import.meta.env.VITE_URL;
     const handleSignin = async () => {
         console.log("handle signin");
         try {

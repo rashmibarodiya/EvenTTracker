@@ -32,7 +32,4 @@ app.use("/todo", todoRoute);
 app.listen(port, () => {
     console.log(`App is running on port ${port}`);
 });
-// const authRoute = require("./auth").router;
-// const todoRoute = require("./todo");
-// Adjust the mongoose connection string as needed
-//  mongoose.connect(`${uri}`, { dbName: "todos" });
+

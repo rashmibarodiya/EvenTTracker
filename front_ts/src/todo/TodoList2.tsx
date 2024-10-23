@@ -8,7 +8,7 @@ const TodoList = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const authStateValue = useRecoilValue(authState);
-    const url = process.env.URL!
+    const url = import.meta.env.VITE_URL;
 
     useEffect(() => {
         const getTodos = async () => {

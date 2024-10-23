@@ -3,9 +3,10 @@ import  { useState } from 'react';
 import {Link} from 'react-router-dom';
 // import {useSetRecoilState} from "recoil";
 // import {authState} from "../state/mg";
-const url = process.env.URL!
+const url = import.meta.env.VITE_URL;
 
 const Signup = () => {
+    console.log("Signup component rendered***********************************",url);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
    

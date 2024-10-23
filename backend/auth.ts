@@ -8,10 +8,11 @@ import { Request, Response, NextFunction } from "express";
 
 
 export const authenticateJwt = (req: Request, res: Response, next: NextFunction) => {
+    console.log("hi authen")
     const authHeader = req.headers.authorization;
-    //console.log("hi authen")
+    console.log("hi authen")
     if (authHeader) {
-        //    console.log("auth  "+authHeader)
+            console.log("auth  "+authHeader)
         const token = authHeader.split(' ')[1];
         jwt.verify(token, secret, (err, user) => {
             if (err) {
@@ -20,6 +21,7 @@ export const authenticateJwt = (req: Request, res: Response, next: NextFunction)
             }
             if (user && typeof user !== "string") {
                 req.headers["userId"] = user.id
+                console.log("all checks passed")
                 //  req.userId = user.id; // the id is given in jwt.sign in login and signup and it is equal to  _id 
                 next();
             } else {

@@ -9,7 +9,7 @@ function AddTodo() {
     const [des, setDes] = useState("");
     const setTodos = useSetRecoilState(todo); // CHANGED: Renamed variable for clarity
     // const uname = useRecoilValue(userName);
-    const url = process.env.URL!;
+    const url = import.meta.env.VITE_URL;
 
     return (
         <>
@@ -23,7 +23,7 @@ function AddTodo() {
                 <input type="text" placeholder="Description" onChange={(e) => setDes(e.target.value)} />
             </div>
             <button onClick={() => {
-                axios.post(`${url}todo/addTodo`, {
+                axios.post(`${url}/todo/addTodo`, {
                     title: title,
                     description: des
                 },

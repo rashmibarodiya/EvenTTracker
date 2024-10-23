@@ -16,7 +16,7 @@ export interface Todo {
 function TodoList() {
     const [todos, setTodos] = useRecoilState<Todo[]>(todo); 
     const uname = useRecoilValue(userName);
-    const url = process.env.URL!
+    const url = import.meta.env.VITE_URL;
     useEffect(() => {
         const getTodos = async () => {
             try {
