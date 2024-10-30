@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { todo } from "../state/mg.js";
-import notification from "../../public/notification.svg"; 
+// import notification from "../../public/notification.svg"; 
 
 function AddTodo() {
     const [title, setTitle] = useState("");
@@ -95,8 +95,8 @@ function AddTodo() {
                             onClick={() => setReminder(!reminder)} 
                             className={`px-4  rounded-md text-white hover:bg-yellow-700
                              transition duration-200 ${reminder? 'bg-green-500':'bg-red-600'}`}
-                        >
-                          <img src= {notification} alt="notification" className="text-white w-5 h-5" />
+                        >notification
+                          {/* <img src= {notification} alt="notification" className="text-white w-5 h-5" /> */}
                         </button>
             </div>
             

@@ -1,10 +1,14 @@
 
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 import  express from "express";
 import * as mongoose from "mongoose";
-import dotenv from 'dotenv';
-dotenv.config();
+
+import  cors from "cors";
+
+import "./mail/cronJob";
+
 
 const app = express();
 import { connectDB } from "./db";
@@ -17,7 +21,7 @@ const uri: string | undefined = process.env.MONG;
 
 
 
-import  cors from "cors";
+
 connectDB()
 app.use(cors())
 app.use(express.json());

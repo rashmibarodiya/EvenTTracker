@@ -2,7 +2,19 @@
 import mongoose from 'mongoose';
 const userSchema = new mongoose.Schema({
     username: String,
-    password: String
+    password: String,
+    email: {
+      type: String,
+      required: true, // Optional: ensure email is required
+      unique: true, // Optional: ensure email is unique
+      trim: true, // Optional: remove whitespace from both ends
+      validate: {
+          validator: function(v : string) {
+              return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); // Simple email regex
+          },
+          message: props => `${props.value} is not a valid email!`
+      }
+  }
 })
 const todoSchema = new mongoose.Schema({
     title: String,

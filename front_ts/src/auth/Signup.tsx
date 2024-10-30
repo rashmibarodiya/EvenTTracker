@@ -7,12 +7,13 @@ const Signup = () => {
     console.log("Signup component rendered***********************************", url);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [email,setEmail]=useState("")
 
     const handleSignup = async () => {
         const response = await fetch(`${url}/auth/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password,email })
         });
         const data = await response.json();
         if (data.token) {
@@ -47,6 +48,16 @@ const Signup = () => {
                         id="password"
                         onChange={(e) => setPassword(e.target.value)} 
                         placeholder='Password' 
+                        className="w-full border border-gray-300 bg-gray-50 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                </div>
+                <div className="mb-4">
+                    
+                    <input 
+                        type='email' 
+                        id="password"
+                        onChange={(e) => setEmail(e.target.value)} 
+                        placeholder='Email' 
                         className="w-full border border-gray-300 bg-gray-50 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                 </div>
