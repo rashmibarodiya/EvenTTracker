@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import AddTodo from "./AddTodo";
+// import AddTodo from "./AddTodo";
 import { userName, todo } from "../state/mg";
 
-import deleteIcon from "../../public/delete.svg"; // Adjust the path accordingly
+import deleteIcon from "../../public/delete.svg"; 
 
 
 export interface Todo {

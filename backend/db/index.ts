@@ -8,7 +8,9 @@ const todoSchema = new mongoose.Schema({
     title: String,
     description: String,
     done: Boolean,
-    userId: String
+    userId: String,
+    date: { type: Date, required: true },
+    setReminder: { type: Boolean, default: true } 
 })
 
 export const User = mongoose.model('User', userSchema) 

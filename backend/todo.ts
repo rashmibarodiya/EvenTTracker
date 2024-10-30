@@ -6,10 +6,10 @@ const router = express.Router();
 
 router.post('/addTodo', authenticateJwt, (req, res) => {
     console.log("i am here to add todo")
-    const { title, description } = req.body;
+    const { title, description,date,setReminder } = req.body;
     const userId = req.headers["userId"];
     const done = false;
-    const todo = new Todo({ title, description, done, userId });
+    const todo = new Todo({ title, description, done, userId ,date,setReminder});
 
     todo.save()
         .then(saved => {

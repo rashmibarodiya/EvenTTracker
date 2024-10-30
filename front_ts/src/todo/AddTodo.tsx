@@ -3,16 +3,21 @@ import axios from "axios";
 import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { todo } from "../state/mg.js";
+import notification from "../../public/notification.svg"; 
 
 function AddTodo() {
     const [title, setTitle] = useState("");
     const [description, setDes] = useState("");
+    const [date, setDate] = useState("")
+    const [reminder , setReminder] =useState(true)
     const setTodos = useSetRecoilState(todo);
     const [error, setError] = useState("");
+
+
     const url = import.meta.env.VITE_URL;
 
     const handleSubmit = async () => {
-        if (!title || !description) {
+        if (!title || !description || !date) {
             setError("Please fill the title and description");
             return; // Early return if fields are empty
         }
@@ -24,6 +29,8 @@ function AddTodo() {
                 {
                     title: title,
                     description: description,
+                    date:date,
+                    setReminder: reminder
                 },
                 {
                     headers: {
@@ -40,6 +47,8 @@ function AddTodo() {
             // Clear input fields after successful submission
             setTitle("");
             setDes("");
+            setDate("")
+            setReminder(true)
         } catch (error) {
             console.error("Error adding todo:", error);
             alert("Failed to add todo");
@@ -69,6 +78,28 @@ function AddTodo() {
                     onChange={(e) => setDes(e.target.value)}
                 />
             </div>
+            <div className="flex justify-between gap-4">
+            <div className="mb-4 w-full">
+                <input
+                    type="text"
+                    id="date"
+                    placeholder="YYYY-MM-DD"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                />
+            </div>
+            
+
+            <button 
+                            onClick={() => setReminder(!reminder)} 
+                            className={`px-4  rounded-md text-white hover:bg-yellow-700
+                             transition duration-200 ${reminder? 'bg-green-500':'bg-red-600'}`}
+                        >
+                          <img src= {notification} alt="notification" className="text-white w-5 h-5" />
+                        </button>
+            </div>
+            
             <button
                 onClick={handleSubmit}
                 className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200"
