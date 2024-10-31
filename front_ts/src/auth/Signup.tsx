@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 const url = import.meta.env.VITE_URL;
+const url2 = import.meta.env.VITE_URL2;
 
 const Signup = () => {
     console.log("Signup component rendered***********************************", url);
@@ -23,6 +24,8 @@ const Signup = () => {
             alert("Error while signing up");
         }
     };
+
+   
 
     return (
         <div className="flex justify-center items-center mt-32">
@@ -60,6 +63,14 @@ const Signup = () => {
                         placeholder='Email' 
                         className="w-full border border-gray-300 bg-gray-50 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
+                </div>
+
+                <div>
+                    <button
+                    onClick={()=>window.location.href = `${url2}/auth/passport/auth/google`}
+                    className='bg-blue-500 rounded-md text-white p-2 hover:bg-blue-600 shadow-lg'>
+                        continue with google
+                    </button>
                 </div>
                 
                 <div className="mb-4">

@@ -1,12 +1,13 @@
 
 import dotenv from 'dotenv';
 dotenv.config();
-
+import jwt from 'jsonwebtoken'
 import  express from "express";
 import * as mongoose from "mongoose";
-
+import passport from 'passport';
+// import cookieSession from 'cookie-session'
 import  cors from "cors";
-
+import session from 'express-session';
 import "./mail/cronJob";
 
 
@@ -26,6 +27,25 @@ connectDB()
 app.use(cors())
 app.use(express.json());
 console.log(process.env.MONG);
+app.use(session(
+    {
+        secret:process.env.SESSION_SECRET!,
+        resave:false,
+        saveUninitialized:true
+    }
+))
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('auth/google', passport.authenticate('google', {scope : ['profile','email']}))
+
+app.get('auth/google/callback',passport.authenticate(
+    'google',{failureRedirect: '/'},
+    (req,res) => {
+        const token = jwt.sign( {id:(req.user as any).id},process.env.JWT_SECRET!, {expiresIn : '1h'})
+        res.json({token})
+    }
+))
  app.use("/auth", router);
 app.use("/todo", todoRoute);
 
