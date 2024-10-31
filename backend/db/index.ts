@@ -3,11 +3,15 @@ import mongoose from 'mongoose';
 const userSchema = new mongoose.Schema({
     username: String,
     password: String,
+    name:{
+      type:String,
+      required :false
+    },
     email: {
       type: String,
-      required: true, // Optional: ensure email is required
-      unique: true, // Optional: ensure email is unique
-      trim: true, // Optional: remove whitespace from both ends
+      required: true, 
+      unique: true,
+      trim: true,
       validate: {
           validator: function(v : string) {
               return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); // Simple email regex

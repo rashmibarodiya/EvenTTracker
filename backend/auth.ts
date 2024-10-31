@@ -10,13 +10,13 @@ import { Request, Response, NextFunction } from "express";
 export const authenticateJwt = (req: Request, res: Response, next: NextFunction) => {
     console.log("hi authen")
     const authHeader = req.headers.authorization;
-    console.log("hi authen")
+    console.log("hi authen",authHeader)
     if (authHeader) {
             console.log("auth  "+authHeader)
         const token = authHeader.split(' ')[1];
         jwt.verify(token, secret, (err, user) => {
             if (err) {
-                console.log("token is not valid")
+                console.log("token is not valid",err)
                 return res.status(403).send("Token is not valid");
             }
             if (user && typeof user !== "string") {
@@ -32,6 +32,14 @@ export const authenticateJwt = (req: Request, res: Response, next: NextFunction)
         res.status(401).send("Token not provided");
     }
 };
+
+router.get("/auth/status", (req, res) => {
+    if (req.isAuthenticated()) {
+        res.json({ user: req.user });
+    } else {
+        res.json({ user: null });
+    }
+});
 
 router.post('/signup', async (req, res) => {
     console.log("i am in")
