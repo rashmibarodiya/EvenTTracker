@@ -29,6 +29,10 @@ console.log(process.env.MONG);
  app.use("/auth", router);
 app.use("/todo", todoRoute);
 
+console.log("Email:", process.env.MAIL); // Log Email
+console.log("Password:", process.env.PASS ? "Loaded" : "Not set"); // Log Password
+
+console.log("Mongo URI:", process.env.MONG);
 
 // app.use("/auth", authRoute);
 // app.use("/todo", todoRoute);

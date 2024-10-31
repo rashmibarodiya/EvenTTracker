@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState,  } from "recoil";
 // import AddTodo from "./AddTodo";
-import { userName, todo } from "../state/mg";
+import {  todo } from "../state/mg";
 
 import deleteIcon from "../../public/delete.svg"; 
 
@@ -17,7 +17,7 @@ export interface Todo {
 
 function TodoList() {
     const [todos, setTodos] = useRecoilState<Todo[]>(todo); 
-    const uname = useRecoilValue(userName);
+ 
     const url = import.meta.env.VITE_URL;
 
     useEffect(() => {

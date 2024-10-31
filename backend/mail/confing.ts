@@ -1,7 +1,7 @@
-import { error } from "console";
 
 
-const nodemailer = require("nodemailer")
+
+import nodemailer from "nodemailer";
 
 const pass = process.env.PASS;
 const user = process.env.MAIL;
