@@ -1,7 +1,7 @@
 import  {  useState, useEffect } from 'react';
 import { authState } from '../state/mg.js';
 import {useRecoilValue} from "recoil";
-import Todo from '../types/Todo';
+import Todo from '../types/Event.js';
 
 const TodoList = () => {
     const [todos, setTodos] = useState<Todo[]>([]);

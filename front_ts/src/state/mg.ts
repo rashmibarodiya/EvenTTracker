@@ -1,7 +1,7 @@
 // mg.ts
 import { atom } from "recoil";
-import { Todo } from "../todo/TodoList"
-import { Auth } from "../types/Todo";
+import { Event } from "../event/Events"
+import { Auth } from "../types/Event";
 
 export const userName = atom<string>({ 
     key: "userName",
@@ -13,8 +13,8 @@ export const password = atom<string | null>({
     default: null
 });
 
-export const todo = atom<Todo[]>({ 
-    key: "todo",
+export const event = atom<Event[]>({ 
+    key: "event",
     default: []
 });
 

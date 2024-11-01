@@ -48,7 +48,7 @@ const AppBar = () => {
     return (
         <div className="flex justify-between items-center bg-gray-100 p-8 shadow-md rounded-lg">
             <div>
-            <h1 className="text-2xl font-bold text-gray-800 md-32">Todo App</h1>
+            <h1 className="text-2xl font-bold text-gray-800 md-32">EvenTTracker</h1>
             <span className="text-gray-600 mt-8">Welcome, {username}!</span>
             </div>
             
@@ -61,7 +61,7 @@ const AppBar = () => {
                         }}
                         className="border rounded-md px-4 py-2 text-slate-900 hover:bg-gray-200 transition duration-200"
                     >
-                        Add Todo
+                        Add Event
                     </button>
                     <button
                         onClick={() => {
@@ -69,7 +69,7 @@ const AppBar = () => {
                         }}
                         className="border rounded-md px-4 py-2 text-slate-900 hover:bg-gray-200 transition duration-200"
                     >
-                        Get Todo
+                        Events
                     </button>
                     <button
                         onClick={handleLogout}

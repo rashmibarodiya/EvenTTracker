@@ -14,11 +14,12 @@ const Signup = () => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [user, setUser] = useState<User | null>(null);
-    const [token, setToken] = useState("");
-    console.log("i am here nope")
-
     const [searchParams] = useSearchParams();
-  console.log("this is search paramas ",searchParams);
+    
+    console.log("i am here ")
+
+   
+    console.log("this is search paramas ",searchParams);
     useEffect(() => {
         axios.get(`${url}/auth/status`, { withCredentials: true })
             .then(response => setUser(response.data.user))
@@ -30,14 +31,8 @@ const Signup = () => {
 
         if (tokenFromUrl) {
             localStorage.setItem('token', tokenFromUrl);
-            setToken(tokenFromUrl);  // Update token state after storing in localStorage
-            console.log("Token set successfully in localStorage");
-            alert("Token set successfully");
-
-            // Clear token from URL for cleaner UX
-            window.history.replaceState({}, document.title, window.location.pathname);
-        } else {
-            alert("No token received");
+            console.log("Token set successfully in localStorage"); 
+            window.location.href= "/"
         }
     }, []);
 
@@ -126,7 +121,7 @@ const Signup = () => {
                             <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-md">Logout</button>
                         </div>
                     ) : (
-                        <button onClick={handleLogin} className="bg-blue-500 text-white px-4 py-2 rounded-md">Login with Google</button>
+                        <button onClick={handleLogin} className="bg-blue-500 text-white px-4 py-2 rounded-md">Continue with Google</button>
                     )}
                 </div>
 
