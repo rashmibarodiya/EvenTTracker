@@ -50,7 +50,7 @@ app.get('/auth/google/callback', (req, res, next) => {
                 return next(err);
             }
             const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
-            res.redirect(`${process.env.FRONT_URL}?token=${token}`);
+            res.redirect(`${process.env.FRONT_URL}/signup?token=${token}`);
         });
     })(req, res, next);
 });

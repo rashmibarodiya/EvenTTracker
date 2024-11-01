@@ -83,7 +83,7 @@ console.log("me route called")
     if (user) {
         console.log("user found",user)
         res.json({
-            username: user.username
+            username: user.username || user.name 
         });
     } else {
         console.log("user not found")

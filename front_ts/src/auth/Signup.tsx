@@ -1,77 +1,81 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
 const url = import.meta.env.VITE_URL;
-const url2 = import.meta.env.VITE_URL2;
-
 
 interface User {
-    displayName: string
+    displayName: string;
 }
+
 const Signup = () => {
-    console.log("Signup component rendered***********************************", url);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [email, setEmail] = useState("")
+    const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
+    const [user, setUser] = useState<User | null>(null);
+    const [token, setToken] = useState("");
+    console.log("i am here nope")
 
-    const [user, setUser] = useState<User>();
-
+    const [searchParams] = useSearchParams();
+  console.log("this is search paramas ",searchParams);
     useEffect(() => {
         axios.get(`${url}/auth/status`, { withCredentials: true })
-            .then(response => {
-                setUser(response.data.user);
-            })
-            .catch(error => {
-                console.error("Error fetching user status:", error);
-            });
+            .then(response => setUser(response.data.user))
+            .catch(error => console.error("Error fetching user status:", error));
+
+        // Extract token from URL and store it directly in localStorage
+        const queryParams = new URLSearchParams(window.location.search);
+        const tokenFromUrl = queryParams.get('token') || "";
+
+        if (tokenFromUrl) {
+            localStorage.setItem('token', tokenFromUrl);
+            setToken(tokenFromUrl);  // Update token state after storing in localStorage
+            console.log("Token set successfully in localStorage");
+            alert("Token set successfully");
+
+            // Clear token from URL for cleaner UX
+            window.history.replaceState({}, document.title, window.location.pathname);
+        } else {
+            alert("No token received");
+        }
     }, []);
 
-    const handleLogin = async () => {
-        try {
-            window.location.href = `${url}/auth/google`; 
-            const queryParams = new URLSearchParams(window.location.search);
-            const token = queryParams.get('token');
-
-            if (token) {
-                localStorage.setItem('token', token);
-                console.log("Token set successfully");
-                alert("Token set successfully");
-            }
-        } catch (e) {
-            console.log("something went wrong in google auth")
-            alert(e)
-        }
+    const handleLogin = () => {
+        window.location.href = `${url}/auth/google`; 
     };
 
-    const handleLogout = async () => {
-        try {
-            window.location.href = `${url}/auth/logout`; 
-            localStorage.setItem('token', "")
-            console.log("token clear succuessfully")
-            alert("token clear successfully")
-
-        } catch (e) {
-            alert(e)
-        }
+    const handleLogout = () => {
+        window.location.href = `${url}/auth/logout`; 
+        localStorage.removeItem('token');
+        setUser(null);
+        console.log("Token cleared successfully");
+        alert("Token cleared successfully");
     };
-
 
     const handleSignup = async () => {
-        const response = await fetch(`${url}/auth/signup`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password, email })
-        });
-        const data = await response.json();
-        if (data.token) {
-            localStorage.setItem("token", data.token);
-            window.location.href = "/todo";
-        } else {
-            alert("Error while signing up");
+        if (!username || !password || !email) {
+            setError("Please fill the required fields");
+            return;
+        }
+        try {
+            const response = await fetch(`${url}/auth/signup`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password, email }),
+            });
+            const data = await response.json();
+            if (data.token) {
+                localStorage.setItem("token", data.token);
+                window.location.href = "/todo";
+            } else {
+                alert("Error while signing up");
+            }
+        } catch (e) {
+            console.error("Signup error:", e);
+            alert("An error occurred during signup.");
         }
     };
-
-
 
     return (
         <div className="flex justify-center items-center mt-32">
@@ -80,45 +84,49 @@ const Signup = () => {
                 <h4 className="text-gray-600 mb-6">Signup below</h4>
 
                 <div className="mb-4">
-
                     <input
-                        type='text'
+                        type="text"
                         id="username"
                         onChange={(e) => setUsername(e.target.value)}
-                        placeholder='Username'
+                        placeholder="Username"
                         className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                 </div>
 
                 <div className="mb-4">
-
                     <input
-                        type='password'
+                        type="password"
                         id="password"
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder='Password'
+                        placeholder="Password"
                         className="w-full border border-gray-300 bg-gray-50 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                 </div>
+                
                 <div className="mb-4">
-
                     <input
-                        type='email'
-                        id="password"
+                        type="email"
+                        id="email"
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder='Email'
+                        placeholder="Email"
                         className="w-full border border-gray-300 bg-gray-50 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                 </div>
 
-                <div className="auth-status">
+                {error && (
+                    <div className="text-red-500 mb-4">
+                        {error}
+                    </div>
+                )}
+
+                <div className="auth-status mb-4">
                     {user ? (
                         <div>
                             <p>Welcome, {user.displayName}!</p>
-                            <button onClick={handleLogout} className="btn-logout">Logout</button>
+                            <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-md">Logout</button>
                         </div>
                     ) : (
-                        <button onClick={handleLogin} className="btn-login">Login with Google</button>
+                        <button onClick={handleLogin} className="bg-blue-500 text-white px-4 py-2 rounded-md">Login with Google</button>
                     )}
                 </div>
 
