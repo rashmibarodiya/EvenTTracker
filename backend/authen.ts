@@ -43,7 +43,7 @@ router.get("/auth/status", (req, res) => {
 
 router.post('/signup', async (req, res) => {
     console.log("i am in")
-    const { username, password } = req.body;
+    const { username, password,email } = req.body;
     const user = await User.findOne({ username });
     console.log("kaboom")
     if (user) {
@@ -51,7 +51,7 @@ router.post('/signup', async (req, res) => {
         
         return res.status(403).send("User already exists");
     }
-    const newUser = new User({ username, password });
+    const newUser = new User({ username, password,email });
     await newUser.save();
     const token = jwt.sign({ id: newUser._id }, secret, { expiresIn: '1h' });
     console.log("user signed up successfully")
