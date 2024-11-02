@@ -42,6 +42,12 @@ app.use(session(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get('/',(req,res)=>{
+    res.status(200).send({
+        msg:"everything great"
+    })
+})
+
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 app.get('/auth/google/callback', (req, res, next) => {
     passport.authenticate('google', (err:any, user:any, info:any) => {
