@@ -1,7 +1,7 @@
 import * as jwt from "jsonwebtoken";
 import * as express from "express";
 const secret = "arabi";
-import { User,connectDB } from './db';
+import { User } from './db';
 export const router = express.Router();
 import { Request, Response, NextFunction } from "express";
 
@@ -91,3 +91,4 @@ console.log("me route called")
     }
 });
 
+export default router;

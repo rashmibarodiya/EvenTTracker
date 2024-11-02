@@ -1,4 +1,4 @@
-import { authenticateJwt } from "./auth";
+import { authenticateJwt } from "./authen";
 import express from "express";
 import { Todo } from "./db";
 

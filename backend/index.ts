@@ -9,7 +9,8 @@ import cors from "cors";
 import session from 'express-session';
 import "./mail/cronJob";
 import './auth/passport';
-import { router as authRoute, router } from "./auth";
+// import { router as authRoute, router } from "./auth";
+import authRoute from "./authen"
 import todoRoute from "./todo";
 import { connectDB } from "./db";
 
@@ -67,7 +68,7 @@ app.get('/auth/google/callback', (req, res, next) => {
     })(req, res, next);
 });
 
-app.use("/auth", router);
+app.use("/auth", authRoute);
 app.use("/todo", todoRoute);
 
 
