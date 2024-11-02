@@ -23,7 +23,14 @@ const uri: string | undefined = process.env.MONG;
 
 
 connectDB()
-app.use(cors())
+const allowedOrigins = [process.env.FRONT_URL!];
+
+app.use(cors({
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    credentials: true 
+}));
+
 app.use(express.json());
 app.use(session(
     {
