@@ -7,7 +7,7 @@ const AppBar = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [username, setUsername] = useState('');
     const navigate = useNavigate();
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [, setIsMenuOpen] = useState(false)
     const url = import.meta.env.VITE_URL;
 
     useEffect(() => {
