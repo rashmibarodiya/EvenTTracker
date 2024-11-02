@@ -1,12 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import google from "/google.svg"
 const url = import.meta.env.VITE_URL;
 
 const Signin = () => {
     console.log("Signup component rendered***********************************", url);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+
+    useEffect(()=>{
+        const queryParams = new URLSearchParams(window.location.search);
+        const tokenFromUrl = queryParams.get('token')
+        if (tokenFromUrl) {
+            localStorage.setItem('token', tokenFromUrl);
+            console.log("Token set successfully in localStorage"); 
+            window.location.href= "/"
+        }
+
+    },[])
 
     const handleSignin = async () => {
         const response = await fetch(`${url}/auth/login`, {
@@ -23,6 +35,9 @@ const Signin = () => {
         }
     };
 
+    const handleGoogle = () => {
+        window.location.href= `${url}/auth/google`
+    }
     return (
         <div className="flex justify-center items-center mt-32 ">
             <div className="bg-gray-100 p-8 rounded-lg shadow-2xl w-96">
@@ -36,7 +51,8 @@ const Signin = () => {
                         id="username"
                         onChange={(e) => setUsername(e.target.value)} 
                         placeholder='Username' 
-                        className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="w-full border border-gray-300 p-2 rounded-md focus:outline-none 
+                        focus:ring-2 focus:ring-gray-800"
                     />
                 </div>
                 
@@ -47,19 +63,32 @@ const Signin = () => {
                         id="password"
                         onChange={(e) => setPassword(e.target.value)} 
                         placeholder='Password' 
-                        className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="w-full border border-gray-300 p-2 rounded-md focus:outline-none 
+                        focus:ring-2 focus:ring-gray-800"
                     />
-                </div>
-                
-                <div className="mb-4">
-                    <span className="text-gray-600">Don't have an account? <Link to="/signup" className="text-blue-500 hover:underline">Login</Link></span>
                 </div>
                 
                 <button 
                     onClick={handleSignin} 
-                    className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition duration-200"
+                    className="w-full bg-gray-700 text-white p-2 rounded-md hover:bg-gray-500 transition duration-200"
                 >
                     Signin
+                </button>
+                <div className="mb-4 mt-2">
+                    <span className="text-gray-600">Don't have an account? <Link to="/signup" 
+                    className="text-blue-800 hover:underline">
+                        Register</Link></span>
+                </div>
+                
+                
+                <button 
+                    onClick={handleGoogle} 
+                    className="w-full bg-gray-700 text-white p-2 rounded-md hover:bg-gray-500 transition duration-200"
+                >
+                    <div className='flex justify-center gap-3'>
+                    <img src = {google} alt ={"google"}width={25} height={25}></img>
+                    Continue with Google
+                    </div>
                 </button>
             </div>
         </div>

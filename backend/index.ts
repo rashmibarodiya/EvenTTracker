@@ -25,7 +25,7 @@ const allowedOrigins = [process.env.FRONT_URL!];
 
 app.use(cors({
     origin: allowedOrigins,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE'], 
     credentials: true 
 }));
 
@@ -46,12 +46,6 @@ app.use("/auth", authRoute);
 app.use("/todo", todoRoute);
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.get('/',(req,res)=>{
-    res.status(200).send({
-        msg:"everything great"
-    })
-})
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 app.get('/auth/google/callback', (req, res, next) => {

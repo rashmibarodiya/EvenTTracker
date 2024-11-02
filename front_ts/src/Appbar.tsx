@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import HamburgerMenu from './components/hambugur';
 
 const AppBar = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [username, setUsername] = useState('');
     const navigate = useNavigate();
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const url = import.meta.env.VITE_URL;
 
     useEffect(() => {
@@ -39,20 +41,7 @@ const AppBar = () => {
         getMe();
     }, [url]);
 
-    const check=async ()=>{
-        const res = await axios.get(`${url}`)
-        try{
-            if(res){
-                alert("it worked")
-                console.log("this is response ",res.data)
-                alert(res.data.msg)
-            }
-        }catch(e){
-            console.log("errorr ",e)
-            alert(e)
-        }
-       
-    }
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         setIsAuthenticated(false);
@@ -61,17 +50,26 @@ const AppBar = () => {
 
     return (
         <div className="flex justify-between items-center bg-gray-100 p-8 shadow-md rounded-lg">
-            <div>
-            <h1 className="text-2xl font-bold text-gray-800 md-32">EvenTTracker</h1>
-            <span className="text-gray-600 mt-8">Welcome, {username}!</span>
+            {/* <div></div> */}
+            <div className='flex justify-between '>
+            <div className='mt-2'>
+            <HamburgerMenu onToggle={setIsMenuOpen} username={username}></HamburgerMenu>
             </div>
-            
+                <div>
+                <h1 className=" ml-4 text-2xl font-bold text-gray-800 md-32">EvenTTracker</h1>
+                {username?(<>
+                    <span className="text-gray-600 mt-8">Welcome, {username}!</span></>):(<></>)}
+                </div>
+                
+                
+            </div>
+<div className='space-x-4 hidden md:flex'>
             {isAuthenticated ? (
                 <div className="flex items-center space-x-4">
-                    
+
                     <button
                         onClick={() => {
-                            navigate('/addTodo')
+                            navigate('/addEvent')
                         }}
                         className="border rounded-md px-4 py-2 text-slate-900 hover:bg-gray-200 transition duration-200"
                     >
@@ -79,7 +77,7 @@ const AppBar = () => {
                     </button>
                     <button
                         onClick={() => {
-                            navigate('/todo')
+                            navigate('/events')
                         }}
                         className="border rounded-md px-4 py-2 text-slate-900 hover:bg-gray-200 transition duration-200"
                     >
@@ -95,8 +93,8 @@ const AppBar = () => {
             ) : (
                 <div className="flex space-x-4">
                     <button
-                    onClick={()=>check}
-                        // onClick={() => navigate('/signup')}
+
+                        onClick={() => navigate('/signup')}
                         className="border rounded-md px-4 py-2 text-slate-900 hover:bg-gray-200 transition duration-200"
                     >
                         Signup
@@ -109,6 +107,7 @@ const AppBar = () => {
                     </button>
                 </div>
             )}
+        </div>
         </div>
     );
 };

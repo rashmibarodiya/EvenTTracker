@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 const url = import.meta.env.VITE_URL;
-
+import google from "/google.svg"
 interface User {
     displayName: string;
 }
@@ -94,7 +94,8 @@ const Signup = () => {
                         id="password"
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Password"
-                        className="w-full border border-gray-300 bg-gray-50 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="w-full border border-gray-300 bg-gray-50 p-2 rounded-md 
+                        focus:outline-none focus:ring-2 focus:ring-gray-800"
                     />
                 </div>
                 
@@ -104,7 +105,8 @@ const Signup = () => {
                         id="email"
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
-                        className="w-full border border-gray-300 bg-gray-50 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="w-full border border-gray-300 bg-gray-50 p-2 rounded-md focus:outline-none focus:ring-2 
+                        focus:ring-gray-800"
                     />
                 </div>
 
@@ -114,6 +116,17 @@ const Signup = () => {
                     </div>
                 )}
 
+<button
+                    onClick={handleSignup}
+                    className="w-full bg-gray-700 text-white p-2  rounded-md hover:bg-gray-600 transition duration-200"
+                >
+                    Signup
+                </button>
+                
+                <div className="mb-4 mt-2">
+                    <span className="text-gray-600">Already signed up? <Link to="/login" className="text-blue-800 hover:underline">Login</Link></span>
+                </div>
+
                 <div className="auth-status mb-4">
                     {user ? (
                         <div>
@@ -121,20 +134,16 @@ const Signup = () => {
                             <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-md">Logout</button>
                         </div>
                     ) : (
-                        <button onClick={handleLogin} className="bg-blue-500 text-white px-4 py-2 rounded-md">Continue with Google</button>
+                        <button onClick={handleLogin} className="bg-gray-700 text-white w-full px-4 py-2 rounded-md
+                        hover:bg-gray-600 transition duration-200">
+                            <div className='flex justify-center gap-3'>
+                            <img src = {google} alt ={"google"}width={25} height={25}></img>
+                            Continue with Google
+                            </div>
+                           </button>
                     )}
                 </div>
 
-                <div className="mb-4">
-                    <span className="text-gray-600">Already signed up? <Link to="/login" className="text-blue-500 hover:underline">Login</Link></span>
-                </div>
-
-                <button
-                    onClick={handleSignup}
-                    className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition duration-200"
-                >
-                    Signup
-                </button>
             </div>
         </div>
     );
