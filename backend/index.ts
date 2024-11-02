@@ -7,6 +7,8 @@ const app = express();
 import passport from 'passport';
 import cors from "cors";
 import session from 'express-session';
+import MongoStore from 'connect-mongo';
+
 import "./mail/cronJob";
 import './auth/passport';
 // import { router as authRoute, router } from "./auth";
@@ -28,13 +30,18 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use(session(
-    {
-        secret: process.env.SESSION_SECRET!,
-        resave: false,
-        saveUninitialized: true
+app.use(session({
+    secret: process.env.SESSION_SECRET!,
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONG,  
+        collectionName: 'sessions'
+    }),
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
     }
-))
+}));
 app.use("/auth", authRoute);
 app.use("/todo", todoRoute);
 app.use(passport.initialize());
