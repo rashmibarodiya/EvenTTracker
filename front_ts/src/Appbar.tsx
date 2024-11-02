@@ -39,6 +39,20 @@ const AppBar = () => {
         getMe();
     }, [url]);
 
+    const check=async ()=>{
+        const res = await axios.get(`${url}`)
+        try{
+            if(res){
+                alert("it worked")
+                console.log("this is response ",res.data)
+                alert(res.data.msg)
+            }
+        }catch(e){
+            console.log("errorr ",e)
+            alert(e)
+        }
+       
+    }
     const handleLogout = () => {
         localStorage.removeItem('token');
         setIsAuthenticated(false);
@@ -81,7 +95,8 @@ const AppBar = () => {
             ) : (
                 <div className="flex space-x-4">
                     <button
-                        onClick={() => navigate('/signup')}
+                    onClick={()=>check}
+                        // onClick={() => navigate('/signup')}
                         className="border rounded-md px-4 py-2 text-slate-900 hover:bg-gray-200 transition duration-200"
                     >
                         Signup
