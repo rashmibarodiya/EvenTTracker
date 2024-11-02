@@ -2,11 +2,11 @@ import * as jwt from "jsonwebtoken";
 import * as express from "express";
 const secret = "arabi";
 import { User } from './db';
-export const router = express.Router();
+ 
 import { Request, Response, NextFunction } from "express";
 
 
-
+const router = express.Router();
 export const authenticateJwt = (req: Request, res: Response, next: NextFunction) => {
     console.log("hi authen")
     const authHeader = req.headers.authorization;

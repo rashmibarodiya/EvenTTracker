@@ -15,12 +15,7 @@ import todoRoute from "./todo";
 import { connectDB } from "./db";
 
 const port = process.env.PORT
-
-
-
 const uri: string | undefined = process.env.MONG;
-
-
 
 
 connectDB()
@@ -40,6 +35,8 @@ app.use(session(
         saveUninitialized: true
     }
 ))
+app.use("/auth", authRoute);
+app.use("/todo", todoRoute);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -68,8 +65,7 @@ app.get('/auth/google/callback', (req, res, next) => {
     })(req, res, next);
 });
 
-app.use("/auth", authRoute);
-app.use("/todo", todoRoute);
+
 
 
 app.listen(port, () => {
