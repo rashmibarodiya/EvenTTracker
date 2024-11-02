@@ -15,7 +15,7 @@ import { connectDB } from "./db";
 
 const port = process.env.PORT
 
-console.log("this is url ", process.env.URL)
+
 
 const uri: string | undefined = process.env.MONG;
 
@@ -25,7 +25,6 @@ const uri: string | undefined = process.env.MONG;
 connectDB()
 app.use(cors())
 app.use(express.json());
-console.log(process.env.MONG);
 app.use(session(
     {
         secret: process.env.SESSION_SECRET!,

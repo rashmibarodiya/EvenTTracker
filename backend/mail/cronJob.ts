@@ -20,11 +20,12 @@ export const findUpcoming = async (): Promise<Todo[]> => {
 
     return await Todo.find({
         date: { $gte: now, $lte: in48Hours }, // Query for tasks due within the next 48 hours
+        setReminder: true,
     });
 };
 
-// cron.schedule("0 * * * *", async () => {
-const test = async()=>{
+ cron.schedule("0 * * * *", async () => {
+// const test = async()=>{
 
     
     console.log("checking for upcoming tasks")
@@ -48,5 +49,5 @@ const test = async()=>{
         console.error("Error in cron job:", e);
     }
 }
-// )
-test()
+)
+// test()
