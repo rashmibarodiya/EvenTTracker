@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import google from "/google.svg"
+import { useNavigate } from 'react-router-dom';
+
 const url = import.meta.env.VITE_URL;
 
 const Signin = () => {
@@ -10,7 +12,7 @@ const Signin = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const[error,setError] = useState("")
-
+const navigate = useNavigate()
 
     useEffect(()=>{
         const queryParams = new URLSearchParams(window.location.search);
@@ -36,7 +38,7 @@ const Signin = () => {
         const data = await response.json();
         if (data.token) {
             localStorage.setItem("token", data.token);
-            window.location.href = "/events";
+           navigate("/events")
         } else {
             alert("Error while signing up");
         }
