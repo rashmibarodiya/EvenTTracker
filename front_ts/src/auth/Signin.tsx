@@ -5,8 +5,11 @@ const url = import.meta.env.VITE_URL;
 
 const Signin = () => {
     console.log("Signup component rendered***********************************", url);
+    console.log("check ",import.meta.env);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const[error,setError] = useState("")
 
 
     useEffect(()=>{
@@ -21,6 +24,10 @@ const Signin = () => {
     },[])
 
     const handleSignin = async () => {
+        if(!username || !password){
+            setError("Please fill the username and password")
+            return
+        }
         const response = await fetch(`${url}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -74,6 +81,13 @@ const Signin = () => {
                 >
                     Signin
                 </button>
+                {error &&(
+                    <div className="mb-4 mt-2">
+                    <span className="text-red-600"> {error}</span>
+                </div>
+                )}
+                
+                
                 <div className="mb-4 mt-2">
                     <span className="text-gray-600">Don't have an account? <Link to="/signup" 
                     className="text-blue-800 hover:underline">

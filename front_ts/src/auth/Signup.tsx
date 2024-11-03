@@ -17,7 +17,7 @@ const Signup = () => {
     const [searchParams] = useSearchParams();
     
     console.log("i am here ")
-
+console.log("url is********************* ",url)
    
     console.log("this is search paramas ",searchParams);
     useEffect(() => {
