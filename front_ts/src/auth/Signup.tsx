@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+
 import { useSearchParams } from 'react-router-dom';
 const url = import.meta.env.VITE_URL;
 import google from "/google.svg"
-interface User {
-    displayName: string;
-}
+// interface User {
+//     displayName: string;
+// }
 
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
-    const [user, setUser] = useState<User | null>(null);
+   
     const [searchParams] = useSearchParams();
     
     console.log("i am here ")
@@ -21,9 +21,9 @@ console.log("url is********************* ",url)
    
     console.log("this is search paramas ",searchParams);
     useEffect(() => {
-        axios.get(`${url}/auth/status`, { withCredentials: true })
-            .then(response => setUser(response.data.user))
-            .catch(error => console.error("Error fetching user status:", error));
+        // axios.get(`${url}/auth/status`, { withCredentials: true })
+        //     .then(response => setUser(response.data.user))
+        //     .catch(error => console.error("Error fetching user status:", error));
 
         // Extract token from URL and store it directly in localStorage
         const queryParams = new URLSearchParams(window.location.search);
@@ -40,13 +40,13 @@ console.log("url is********************* ",url)
         window.location.href = `${url}/auth/google`; 
     };
 
-    const handleLogout = () => {
-        window.location.href = `${url}/auth/logout`; 
-        localStorage.removeItem('token');
-        setUser(null);
-        console.log("Token cleared successfully");
-        alert("Token cleared successfully");
-    };
+    // const handleLogout = () => {
+    //     window.location.href = `${url}/auth/logout`; 
+    //     localStorage.removeItem('token');
+    //     setUser(null);
+    //     console.log("Token cleared successfully");
+    //     alert("Token cleared successfully");
+    // };
 
     const handleSignup = async () => {
         if (!username || !password || !email) {
@@ -62,7 +62,7 @@ console.log("url is********************* ",url)
             const data = await response.json();
             if (data.token) {
                 localStorage.setItem("token", data.token);
-                window.location.href = "/todo";
+                window.location.href = "/events";
             } else {
                 alert("Error while signing up");
             }
@@ -73,7 +73,7 @@ console.log("url is********************* ",url)
     };
 
     return (
-        <div className="flex justify-center items-center mt-32">
+        <div className="flex justify-center items-center mt-24">
             <div className="bg-gray-100 p-8 rounded-lg shadow-2xl w-96">
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Welcome!</h2>
                 <h4 className="text-gray-600 mb-6">Signup below</h4>
@@ -84,7 +84,8 @@ console.log("url is********************* ",url)
                         id="username"
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="Username"
-                        className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="w-full border border-gray-300 bg-gray-50 p-2 rounded-md focus:rounded-sm focus:outline-none focus:ring-2
+                         focus:ring-gray-800"
                     />
                 </div>
 
@@ -95,7 +96,7 @@ console.log("url is********************* ",url)
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Password"
                         className="w-full border border-gray-300 bg-gray-50 p-2 rounded-md 
-                        focus:outline-none focus:ring-2 focus:ring-gray-800"
+                        focus:outline-none focus:ring-2 focus:rounded-sm focus:ring-gray-800"
                     />
                 </div>
                 
@@ -106,7 +107,7 @@ console.log("url is********************* ",url)
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
                         className="w-full border border-gray-300 bg-gray-50 p-2 rounded-md focus:outline-none focus:ring-2 
-                        focus:ring-gray-800"
+                        focus:ring-gray-800 focus:rounded-sm"
                     />
                 </div>
 
@@ -128,12 +129,7 @@ console.log("url is********************* ",url)
                 </div>
 
                 <div className="auth-status mb-4">
-                    {user ? (
-                        <div>
-                            <p>Welcome, {user.displayName}!</p>
-                            <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-md">Logout</button>
-                        </div>
-                    ) : (
+                    
                         <button onClick={handleLogin} className="bg-gray-700 text-white w-full px-4 py-2 rounded-md
                         hover:bg-gray-600 transition duration-200">
                             <div className='flex justify-center gap-3'>
@@ -141,7 +137,7 @@ console.log("url is********************* ",url)
                             Continue with Google
                             </div>
                            </button>
-                    )}
+                    
                 </div>
 
             </div>

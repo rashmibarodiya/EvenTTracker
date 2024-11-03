@@ -5,7 +5,7 @@ const url = import.meta.env.VITE_URL;
 
 const Signin = () => {
     console.log("Signup component rendered***********************************", url);
-    console.log("check ",import.meta.env);
+   
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -36,7 +36,7 @@ const Signin = () => {
         const data = await response.json();
         if (data.token) {
             localStorage.setItem("token", data.token);
-            window.location.href = "/todo";
+            window.location.href = "/event";
         } else {
             alert("Error while signing up");
         }
@@ -58,7 +58,7 @@ const Signin = () => {
                         id="username"
                         onChange={(e) => setUsername(e.target.value)} 
                         placeholder='Username' 
-                        className="w-full border border-gray-300 p-2 rounded-md focus:outline-none 
+                        className="w-full border border-gray-300 p-2 rounded-md focus:rounded-sm focus:outline-none 
                         focus:ring-2 focus:ring-gray-800"
                     />
                 </div>
@@ -70,7 +70,7 @@ const Signin = () => {
                         id="password"
                         onChange={(e) => setPassword(e.target.value)} 
                         placeholder='Password' 
-                        className="w-full border border-gray-300 p-2 rounded-md focus:outline-none 
+                        className="w-full border border-gray-300 p-2 rounded-md focus:rounded-sm focus:outline-none 
                         focus:ring-2 focus:ring-gray-800"
                     />
                 </div>

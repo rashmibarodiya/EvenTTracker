@@ -64,7 +64,7 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ onToggle, username }) => 
                                 <button className="hover:text-green-900 rounded-md px-2 w-48 flex justify-left border-gray-500 shadow-lg
            text-gray-700 cursor-pointer"
                                     onClick={() => {
-
+navigate("/")
                                     }}
                                 >Home
 
@@ -109,7 +109,7 @@ navigate("/events")
                                 <button className="hover:text-green-900 rounded-md px-2 w-48 flex justify-left 
                                 border-gray-500 shadow-lg text-gray-700 cursor-pointer"
                                     onClick={() => {
-
+navigate("/")
                                     }}
                                 >Home
 
