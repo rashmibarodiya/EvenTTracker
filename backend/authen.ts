@@ -53,7 +53,7 @@ router.post('/signup', async (req, res) => {
     }
     const newUser = new User({ username, password,email });
     await newUser.save();
-    const token = jwt.sign({ id: newUser._id }, secret, { expiresIn: '1h' });
+    const token = jwt.sign({ id: newUser._id }, secret, { expiresIn: '3h' });
     console.log("user signed up successfully")
     res.json({
         message: "User created successfully", token
@@ -66,7 +66,7 @@ router.post('/login', async (req, res) => {
     console.log(username)
     const user = await User.findOne({ username, password });
     if (user) {
-        const token = jwt.sign({ id: user._id }, secret, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id }, secret, { expiresIn: '3h' });
         return res.json({
             message: "Logged in successfully", token
         });

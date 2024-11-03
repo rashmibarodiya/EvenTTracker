@@ -58,6 +58,34 @@ router.patch('/todos/:todoId/done', authenticateJwt, (req, res) => {
         });
 });
 
+router.put('/todos/edit/:todoId',authenticateJwt,(req,res)=>{
+    console.log("here for updating the todo")
+    const { todoId } = req.params;
+    const userId = req.headers["userId"];
+    const{title,description,date,setReminder} = req.body
+
+    Todo.findOneAndUpdate(
+        { _id: todoId, userId },
+        { title, description, date, setReminder },
+        { new: true }
+    )
+        .then(updated => {
+            if (!updated) {
+                console.log("no todo found")
+                return res.status(404).json("Todo not found");
+            }
+            console.log("updated!!!!")
+            res.status(200).json(updated);
+        })
+        .catch(err => {
+            console.log("update error ",err)
+            console.error("Error updating todo:", err);
+            res.status(500).json({
+                message: "Failed to update todo"
+            });
+        });
+})
+
 
 router.delete('/todos/:todoId', authenticateJwt, (req, res) => {
     console.log("Attempting to delete the todo");
