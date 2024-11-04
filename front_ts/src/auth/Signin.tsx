@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import google from "/google.svg"
-import { useNavigate } from 'react-router-dom';
+
+
 
 const url = import.meta.env.VITE_URL;
 
 const Signin = () => {
     console.log("Signup component rendered***********************************", url);
    
-
+const[loading,setLoading] = useState(false)
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const[error,setError] = useState("")
-const navigate = useNavigate()
+
 
     useEffect(()=>{
         const queryParams = new URLSearchParams(window.location.search);
@@ -26,23 +27,41 @@ const navigate = useNavigate()
     },[])
 
     const handleSignin = async () => {
-        if(!username || !password){
-            setError("Please fill the username and password")
-            return
+        if (!username || !password) {
+            setError("Please fill the username and password");
+            return;
         }
-        const response = await fetch(`${url}/auth/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-        });
-        const data = await response.json();
-        if (data.token) {
-            localStorage.setItem("token", data.token);
-           navigate("/events")
-        } else {
-            alert("Error while signing up");
+        setLoading(true);
+    
+        try {
+            const response = await fetch(`${url}/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                setError(errorData.message || "Login failed");
+                setLoading(false);
+                return;
+            }
+    
+            const data = await response.json();
+            if (data.token) {
+                localStorage.setItem("token", data.token);
+                setLoading(false);
+                
+                 window.location.href= "/"
+                
+            }
+        } catch (e) {
+            setError("An error occurred during login.");
+            setLoading(false);
+            alert("Error while signing in.");
         }
     };
+    
 
     const handleGoogle = () => {
         window.location.href= `${url}/auth/google`
@@ -79,9 +98,22 @@ const navigate = useNavigate()
                 
                 <button 
                     onClick={handleSignin} 
-                    className="w-full bg-gray-700 text-white p-2 rounded-md hover:bg-gray-500 transition duration-200"
+                    className={`w-full bg-gray-700 text-white p-2 rounded-md hover:bg-gray-500 
+                        transition duration-200 `}
                 >
-                    Signin
+                     {loading ? (
+                    
+                        <div
+                        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid 
+                        border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                        role="status">
+                        {/* <span
+                          className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                        >Loading...</span> */}
+                      </div>
+                    ) : (
+                        "Signin"
+                    )}
                 </button>
                 {error &&(
                     <div className="mb-4 mt-2">

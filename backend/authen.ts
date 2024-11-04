@@ -4,6 +4,7 @@ const secret = "arabi";
 import { User } from './db';
  
 import { Request, Response, NextFunction } from "express";
+import { error } from "console";
 
 
 const router = express.Router();
@@ -61,19 +62,28 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    console.log("in login")
+    console.log("in login");
     const { username, password } = req.body;
-    console.log(username)
-    const user = await User.findOne({ username, password });
-    if (user) {
-        const token = jwt.sign({ id: user._id }, secret, { expiresIn: '3h' });
-        return res.json({
-            message: "Logged in successfully", token
+    console.log(username);
+
+    try {
+        const user = await User.findOne({ username, password });
+        if (user) {
+            const token = jwt.sign({ id: user._id }, secret, { expiresIn: '3h' });
+            return res.json({
+                message: "Logged in successfully", token
+            });
+        }
+        res.status(403).json({
+            message: "Invalid username or password"
+        });
+    } catch (error:any) {
+        
+        res.status(500).json({
+            message: "An error occurred during login",
+            error: error.message
         });
     }
-    res.status(403).send({
-        message: "Invalid username or password"
-    });
 });
 
 router.get("/me", authenticateJwt, async (req, res) => {

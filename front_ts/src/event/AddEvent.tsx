@@ -10,6 +10,7 @@ function AddEvent() {
     const [description, setDes] = useState("");
     const [date, setDate] = useState("")
     const [reminder, setReminder] = useState(true)
+    const[loading,setLoading] = useState(false)
     const setEvents = useSetRecoilState(event);
     const [error, setError] = useState("");
 
@@ -21,6 +22,7 @@ function AddEvent() {
             setError("Please fill the title and description");
             return; // Early return if fields are empty
         }
+        setLoading(true)
         setError(""); // Clear previous errors
 
         try {
@@ -41,7 +43,8 @@ function AddEvent() {
             );
 
             console.log(response);
-            alert("Event added");
+            
+            
             setEvents((oldEvents) => [...oldEvents, response.data]);
 
             // Clear input fields after successful submission
@@ -49,8 +52,12 @@ function AddEvent() {
             setDes("");
             setDate("")
             setReminder(true)
+            setLoading(false)
+            alert("Event added");
+           
         } catch (error) {
             console.error("Error adding event:", error);
+            setLoading(false)
             alert("Failed to add event");
         }
     };
@@ -100,7 +107,14 @@ function AddEvent() {
             onClick={handleSubmit}
             className="w-full py-2 bg-gray-800 text-white rounded-md hover:bg-gray-600 transition duration-200"
         >
-            Submit
+            {loading?
+            (
+                <div
+                        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid 
+                        border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                        role="status"></div>
+           
+            ):(" Submit")}
         </button>
         {error && (
             <div className="mt-2 text-red-500">

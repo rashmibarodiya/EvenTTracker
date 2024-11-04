@@ -45,7 +45,7 @@ const AppBar = () => {
     const handleLogout = () => {
         localStorage.removeItem('token');
         setIsAuthenticated(false);
-        navigate('/');
+        window.location.href= "/"
     };
 
     return (

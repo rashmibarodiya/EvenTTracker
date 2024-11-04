@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { useSearchParams } from 'react-router-dom';
 const url = import.meta.env.VITE_URL;
+
+
 import google from "/google.svg"
 // interface User {
 //     displayName: string;
@@ -13,7 +15,7 @@ const Signup = () => {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
-   
+    const [loading,setLoading] = useState(false)
     const [searchParams] = useSearchParams();
     
     console.log("i am here ")
@@ -21,11 +23,6 @@ console.log("url is********************* ",url)
    
     console.log("this is search paramas ",searchParams);
     useEffect(() => {
-        // axios.get(`${url}/auth/status`, { withCredentials: true })
-        //     .then(response => setUser(response.data.user))
-        //     .catch(error => console.error("Error fetching user status:", error));
-
-        // Extract token from URL and store it directly in localStorage
         const queryParams = new URLSearchParams(window.location.search);
         const tokenFromUrl = queryParams.get('token') || "";
 
@@ -40,20 +37,13 @@ console.log("url is********************* ",url)
         window.location.href = `${url}/auth/google`; 
     };
 
-    // const handleLogout = () => {
-    //     window.location.href = `${url}/auth/logout`; 
-    //     localStorage.removeItem('token');
-    //     setUser(null);
-    //     console.log("Token cleared successfully");
-    //     alert("Token cleared successfully");
-    // };
-
     const handleSignup = async () => {
         if (!username || !password || !email) {
             setError("Please fill the required fields");
             return;
         }
         try {
+            setLoading(true)
             const response = await fetch(`${url}/auth/signup`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -62,11 +52,14 @@ console.log("url is********************* ",url)
             const data = await response.json();
             if (data.token) {
                 localStorage.setItem("token", data.token);
+                setLoading(false)
                 window.location.href = "/events";
             } else {
+                setLoading(false)
                 alert("Error while signing up");
             }
         } catch (e) {
+            setLoading(false)
             console.error("Signup error:", e);
             alert("An error occurred during signup.");
         }
@@ -121,7 +114,15 @@ console.log("url is********************* ",url)
                     onClick={handleSignup}
                     className="w-full bg-gray-700 text-white p-2  rounded-md hover:bg-gray-600 transition duration-200"
                 >
-                    Signup
+                    {loading?(
+                        <div
+                        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid 
+                        border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                        role="status"></div>
+           
+                    ):(
+                        "Signup"
+                    )}
                 </button>
                 
                 <div className="mb-4 mt-2">

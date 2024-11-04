@@ -90,7 +90,7 @@ navigate("/events")
               text-red-900 cursor-pointer"
                                     onClick={() => {
                                         localStorage.removeItem('token');
-                                        navigate('/');
+                                        window.location.href= "/"
                                     }}
                                 >Logout</button>
                             </ul>
