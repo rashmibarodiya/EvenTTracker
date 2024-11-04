@@ -22,7 +22,7 @@ export default function Home() {
         <Feature 
           title="View Events" 
           image={calendar}
-          description="Keep track of all your upcoming events in a single, organized view." 
+          description="Keep track of every upcoming event with ease—view, organize, and set reminders to stay for every task." 
         />
         <Feature 
           title="Get Reminders" 
@@ -54,7 +54,7 @@ interface FeatureProp {
 
 function Feature({ title, description, image }: FeatureProp) {
   return (
-    <div className="p-4 lg:w-72 border rounded-lg bg-gray-100 shadow-sm transform transition-transform duration-300 hover:scale-105">
+    <div className="p-4 lg:w-72  border rounded-lg bg-gray-100 shadow-sm transform transition-transform duration-300 hover:scale-105">
       <div className="flex items-center gap-4">
        
         <div className="">

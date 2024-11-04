@@ -21,7 +21,7 @@ export interface Event {
 function EventList() {
     const [events, setEvents] = useRecoilState<Event[]>(event);
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-    
+
     const url = import.meta.env.VITE_URL;
 
     const navigate = useNavigate();
@@ -133,12 +133,23 @@ function EventList() {
                             <p className="text-center">Oops! It seems you haven't created any events yet.</p>
                             <img src={nodata} alt="No events" className="w-96 h-96" />
                         </div>
-                        <button
-                            onClick={() => navigate("/addEvent")}
-                            className="bg-gray-700 p-4 text-white hover:bg-gray-600 rounded-md"
-                        >
-                            Add Event
-                        </button>
+                        {localStorage.getItem("token") ? (
+
+                            <button
+                                onClick={() => navigate("/addEvent")}
+                                className="bg-gray-700 p-4 text-white hover:bg-gray-600 rounded-md"
+                            >
+                                Add Event
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => navigate("/login")}
+                                className="bg-gray-700 p-4 text-white hover:bg-gray-600 rounded-md"
+                            >
+                                Signin
+                            </button>
+                        )}
+
                     </div>
                 )}
             </div>

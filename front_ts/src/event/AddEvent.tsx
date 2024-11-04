@@ -85,7 +85,7 @@ function AddEvent() {
                 onChange={(e) => setDes(e.target.value)}
             />
         </div>
-        <div className="flex flex-col sm:flex-row justify-between gap-4 mb-4">
+        <div className="flex justify-between gap-4 mb-4">
             <input
                 type="text"
                 id="date"
