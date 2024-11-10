@@ -200,7 +200,7 @@ function Update({ event, onClose, onSave }: UpdateProps) {
             onSave(res.data);
             setLoading(false)
         } catch (error) {
-            console.error("Something went wrong when updating event", error);
+            console.error("Oops! Something went wrong when updating event", error);
             setLoading(false)
         }
     };
